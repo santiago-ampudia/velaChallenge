@@ -7,7 +7,7 @@ investment decision pipeline, achieving >20% precision through:
 
 1. Data Cleaning (Module 1) - Clean and prepare raw founder data
 2. Data Splitting (Module 2) - Create train/test splits with proper resampling
-3. Feature Selection (Module 3) - Identify most predictive features
+3. Data Encoding (Module 3) - Transform features into model-ready encoded formats
 4. LLM Reasoning (Module 4) - Generate chain-of-thought explanations
 5. Graph Construction (Module 5) - Build weighted causal graphs
 6. Rule Extraction (Module 6) - Extract IF-THEN rules with thresholds
@@ -39,6 +39,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__)))
 # Module imports
 from module_1_data_cleaning import run_data_cleaning
 from module_2_data_splitting import run_data_splitting
+from module_3_data_encoding import run_data_encoding
 
 
 class VelaPipeline:
@@ -153,17 +154,52 @@ class VelaPipeline:
             self.pipeline_state['errors'].append(error_msg)
             return False
     
-    def run_module_3_feature_selection(self) -> bool:
+    def run_module_3_data_encoding(self) -> bool:
         """
-        Execute Module 3: Feature Selection (Placeholder)
+        Execute Module 3: Data Encoding and Feature Preparation
         
         Returns:
             bool: True if successful, False otherwise
         """
-        logger.info("=" * 60)
-        logger.info("MODULE 3: FEATURE SELECTION - Not implemented yet")
-        logger.info("=" * 60)
-        return True
+        try:
+            logger.info("=" * 60)
+            logger.info("STARTING MODULE 3: DATA ENCODING & FEATURE PREPARATION")
+            logger.info("=" * 60)
+            
+            # Execute data encoding
+            train_prepared_df, test_prepared_df = run_data_encoding()
+            
+            # Store metadata
+            self.pipeline_state['data_artifacts']['train_prepared'] = {
+                'pickle_path': 'artifacts/prepared_splits/train_prepared.pkl',
+                'shape': train_prepared_df.shape,
+                'features': list(train_prepared_df.columns),
+                'dtypes': train_prepared_df.dtypes.to_dict()
+            }
+            
+            self.pipeline_state['data_artifacts']['test_prepared'] = {
+                'pickle_path': 'artifacts/prepared_splits/test_prepared.pkl',
+                'shape': test_prepared_df.shape,
+                'features': list(test_prepared_df.columns),
+                'dtypes': test_prepared_df.dtypes.to_dict()
+            }
+            
+            self.pipeline_state['modules_completed'].append('module_3_data_encoding')
+            
+            logger.info(f"✅ Module 3 completed successfully")
+            logger.info(f"   - Prepared training set: {train_prepared_df.shape}")
+            logger.info(f"   - Prepared test set: {test_prepared_df.shape}")
+            logger.info(f"   - Features encoded: {len(train_prepared_df.columns)}")
+            logger.info(f"   - Training output: {self.pipeline_state['data_artifacts']['train_prepared']['pickle_path']}")
+            logger.info(f"   - Test output: {self.pipeline_state['data_artifacts']['test_prepared']['pickle_path']}")
+            
+            return True
+            
+        except Exception as e:
+            error_msg = f"Module 3 failed: {str(e)}"
+            logger.error(error_msg)
+            self.pipeline_state['errors'].append(error_msg)
+            return False
     
     def run_module_4_llm_reasoning(self) -> bool:
         """
@@ -227,7 +263,7 @@ class VelaPipeline:
             modules = [
                 'module_1_data_cleaning',
                 'module_2_data_splitting', 
-                'module_3_feature_selection',
+                'module_3_data_encoding',
                 'module_4_llm_reasoning',
                 'module_5_graph_construction',
                 'module_6_rule_extraction',
@@ -241,7 +277,7 @@ class VelaPipeline:
         module_functions = {
             'module_1_data_cleaning': self.run_module_1_data_cleaning,
             'module_2_data_splitting': self.run_module_2_data_splitting,
-            'module_3_feature_selection': self.run_module_3_feature_selection,
+            'module_3_data_encoding': self.run_module_3_data_encoding,
             'module_4_llm_reasoning': self.run_module_4_llm_reasoning,
             'module_5_graph_construction': self.run_module_5_graph_construction,
             'module_6_rule_extraction': self.run_module_6_rule_extraction,
@@ -293,8 +329,8 @@ def main():
     """Main entry point for the pipeline."""
     pipeline = VelaPipeline()
     
-    # Execute Module 1 and Module 2 since they are implemented
-    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting'])
+    # Execute Modules 1, 2, and 3 since they are implemented
+    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding'])
     
     # Print final status
     status = pipeline.get_pipeline_status()
