@@ -1,0 +1,49 @@
+{
+  "extraction_summary": {
+    "total_edges_in_graph": 39,
+    "valid_edges_processed": 0,
+    "rules_generated": 25,
+    "top_edges_requested": 25
+  },
+  "rules_by_feature_type": {
+    "ordinal": 8,
+    "continuous": 9,
+    "binary": 8
+  },
+  "rules_by_outcome": {
+    "success": 23,
+    "failure": 2
+  },
+  "feature_types_detected": {
+    "education_institution": "ordinal",
+    "number_of_leadership_roles": "continuous",
+    "yoe": "continuous",
+    "emotional_intelligence": "continuous",
+    "ceo_experience": "binary",
+    "technical_leadership_roles": "continuous",
+    "perseverance": "ordinal",
+    "nasdaq_company_experience": "binary",
+    "significant_press_media_coverage": "ordinal",
+    "number_of_companies": "continuous",
+    "industry_achievements": "ordinal",
+    "previous_startup_funding_experience_as_ceo": "binary",
+    "board_advisor_roles": "continuous",
+    "big_company_experience": "binary",
+    "VC_experience": "binary",
+    "persona": "ordinal",
+    "languages": "ordinal",
+    "number_of_roles": "continuous",
+    "career_growth": "continuous",
+    "education_field_of_study_qual": "ordinal",
+    "nasdaq_leadership": "binary",
+    "investor_quality_prior_startup": "binary",
+    "emotional_intelligence_qual": "ordinal"
+  },
+  "skipped_features": [],
+  "configuration": {
+    "num_top_edges": 25,
+    "min_edge_weight": 1,
+    "include_failure_rules": true,
+    "prioritize_success_rules": true
+  }
+}

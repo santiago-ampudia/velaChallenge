@@ -132,24 +132,23 @@ dmypy.json
 cython_debug/
 
 # PyCharm
-.idea/
-
-# Data files
-*.csv
-*.tsv
-*.json
-*.jsonl
-*.parquet
-*.feather
-*.h5
-*.hdf5
-*.xlsx
-*.xls
-*.pkl
-*.pickle
-*.npy
-*.npz
-*.mat
+.idea
+// # Data files
+// *.csv
+// *.tsv
+// *.json
+// *.jsonl
+// *.parquet
+// *.feather
+// *.h5
+// *.hdf5
+// *.xlsx
+// *.xls
+// *.pkl
+// *.pickle
+// *.npy
+// *.npz
+// *.mat
 
 # Machine Learning
 models/

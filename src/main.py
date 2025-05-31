@@ -45,6 +45,7 @@ from module_4_feature_selection import run_feature_selection
 from module_5_llm_reasoning import run_llm_reasoning
 from module_6_causal_graph import run_causal_graph_construction
 from module_7_rule_extraction import run_rule_extraction
+from module_8_threshold_calibration import run_threshold_calibration
 
 
 class VelaPipeline:
@@ -99,10 +100,10 @@ class VelaPipeline:
                 'artifacts/rules/initial_rules.json',
                 'artifacts/rules/rule_statistics.json'
             ],
-            'module_8_evaluation': [
-                'artifacts/eval/evaluation_report.json',
-                'artifacts/eval/confusion_matrix.png',
-                'artifacts/eval/precision_recall_curve.png'
+            'module_8_threshold_calibration': [
+                'artifacts/rules_calibrated/calibrated_rules.json',
+                'artifacts/eval/threshold_metrics.csv',
+                'artifacts/rules_calibrated/calibration_summary.json'
             ]
         }
         
@@ -207,7 +208,7 @@ class VelaPipeline:
             'module_5_llm_reasoning': self.run_module_5_llm_reasoning,
             'module_6_graph_construction': self.run_module_6_graph_construction,
             'module_7_rule_extraction': self.run_module_7_rule_extraction,
-            'module_8_evaluation': self.run_module_8_evaluation
+            'module_8_threshold_calibration': self.run_module_8_threshold_calibration
         }
         
         if module_to_replace in module_functions:
@@ -595,17 +596,45 @@ class VelaPipeline:
             self.pipeline_state['errors'].append(error_msg)
             return False
     
-    def run_module_8_evaluation(self) -> bool:
+    def run_module_8_threshold_calibration(self) -> bool:
         """
-        Execute Module 8: Model Evaluation and Reporting (Placeholder)
+        Execute Module 8: Threshold Calibration
         
         Returns:
             bool: True if successful, False otherwise
         """
-        logger.info("=" * 60)
-        logger.info("MODULE 8: EVALUATION - Not implemented yet")
-        logger.info("=" * 60)
-        return True
+        try:
+            logger.info("=" * 60)
+            logger.info("STARTING MODULE 8: THRESHOLD CALIBRATION")
+            logger.info("=" * 60)
+            
+            # Execute threshold calibration
+            calibrated_rules = run_threshold_calibration()
+            
+            # Store metadata
+            self.pipeline_state['data_artifacts']['calibrated_rules'] = {
+                'json_path': 'artifacts/rules_calibrated/calibrated_rules.json',
+                'csv_path': 'artifacts/eval/threshold_metrics.csv',
+                'summary_path': 'artifacts/rules_calibrated/calibration_summary.json',
+                'rule_count': len(calibrated_rules),
+                'description': 'Calibrated IF-THEN rules with specific thresholds achieving target precision'
+            }
+            
+            self.pipeline_state['modules_completed'].append('module_8_threshold_calibration')
+            
+            logger.info(f"✅ Module 8 completed successfully")
+            logger.info(f"   - Calibrated rules: {len(calibrated_rules)}")
+            logger.info(f"   - Rules JSON: {self.pipeline_state['data_artifacts']['calibrated_rules']['json_path']}")
+            logger.info(f"   - Metrics CSV: {self.pipeline_state['data_artifacts']['calibrated_rules']['csv_path']}")
+            logger.info(f"   - Summary: {self.pipeline_state['data_artifacts']['calibrated_rules']['summary_path']}")
+            
+            return True
+            
+        except Exception as e:
+            error_msg = f"Module 8 failed: {str(e)}"
+            logger.error(error_msg)
+            self.pipeline_state['errors'].append(error_msg)
+            return False
     
     def execute_pipeline(self, modules: Optional[list] = None) -> Dict[str, Any]:
         """
@@ -626,7 +655,7 @@ class VelaPipeline:
                 'module_5_llm_reasoning',
                 'module_6_graph_construction',
                 'module_7_rule_extraction',
-                'module_8_evaluation'
+                'module_8_threshold_calibration'
             ]
         
         logger.info("🚀 Starting Vela Partners Investment Decision Pipeline")
@@ -641,7 +670,7 @@ class VelaPipeline:
             'module_5_llm_reasoning': self.run_module_5_llm_reasoning,
             'module_6_graph_construction': self.run_module_6_graph_construction,
             'module_7_rule_extraction': self.run_module_7_rule_extraction,
-            'module_8_evaluation': self.run_module_8_evaluation
+            'module_8_threshold_calibration': self.run_module_8_threshold_calibration
         }
         
         # Execute each module
@@ -689,8 +718,8 @@ def main():
     """Main entry point for the pipeline."""
     pipeline = VelaPipeline()
     
-    # Execute Modules 1, 2, 3, 4, 5, 6, and 7 since they are implemented
-    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding', 'module_4_feature_selection', 'module_5_llm_reasoning', 'module_6_graph_construction', 'module_7_rule_extraction'])
+    # Execute Modules 1, 2, 3, 4, 5, 6, 7, and 8 since they are implemented
+    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding', 'module_4_feature_selection', 'module_5_llm_reasoning', 'module_6_graph_construction', 'module_7_rule_extraction', 'module_8_threshold_calibration'])
     
     # Print final status
     status = pipeline.get_pipeline_status()
@@ -714,7 +743,7 @@ def main():
     logger.info("  pipeline.replace_last_completed_module()   # Reset + re-run last module")
     logger.info("  pipeline.clean_all_outputs()              # Nuclear option: reset everything")
     logger.info("Example usage:")
-    logger.info("  # If Module 6 output was wrong and needs replacement:")
+    logger.info("  # If Module 8 output was wrong and needs replacement:")
     logger.info("  # success = pipeline.replace_last_completed_module()")
     
     return result

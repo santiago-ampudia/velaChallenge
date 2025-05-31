@@ -1,0 +1,6 @@
+feature,feature_type,outcome,weight,threshold,rule_precision,rule_support,combined_precision,combined_support
+education_institution,ordinal,success,122,4,0.045,6,0.235,4
+yoe,continuous,success,72,43.030136,0.067,1,0.235,4
+previous_startup_funding_experience_as_ceo,binary,success,22,True,0.060,9,0.235,4
+board_advisor_roles,continuous,success,20,True,0.049,9,0.235,4
+persona,ordinal,success,12,"['L2_1', 'L3_3', 'L3_6']",1.000,1,0.235,4

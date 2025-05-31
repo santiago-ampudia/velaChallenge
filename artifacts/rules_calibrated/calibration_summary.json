@@ -1,0 +1,26 @@
+{
+  "calibration_summary": {
+    "total_rules": 25,
+    "rules_with_valid_thresholds": 24,
+    "rules_meeting_min_support": 24,
+    "final_combined_precision": 0.23529411764705882,
+    "final_combined_support": 4,
+    "final_combined_recall": 0.2,
+    "final_combined_f1": 0.2162162162162162,
+    "rules_used_in_combination": 5,
+    "target_achieved": true,
+    "combination_strategy": "weighted_scoring"
+  },
+  "configuration": {
+    "precision_target": 0.2,
+    "min_support": 1,
+    "max_rules_to_combine": null,
+    "rule_sorting_strategy": "weight_desc",
+    "stop_at_target": false
+  },
+  "test_set_info": {
+    "size": 1000,
+    "positive_count": 20,
+    "negative_count": 980
+  }
+}
