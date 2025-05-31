@@ -43,6 +43,7 @@ from module_2_data_splitting import run_data_splitting
 from module_3_data_encoding import run_data_encoding
 from module_4_feature_selection import run_feature_selection
 from module_5_llm_reasoning import run_llm_reasoning
+from module_6_causal_graph import run_causal_graph_construction
 
 
 class VelaPipeline:
@@ -512,15 +513,48 @@ class VelaPipeline:
     
     def run_module_6_graph_construction(self) -> bool:
         """
-        Execute Module 6: Weighted Causal Graph Construction (Placeholder)
+        Execute Module 6: Weighted Causal Graph Construction
         
         Returns:
             bool: True if successful, False otherwise
         """
-        logger.info("=" * 60)
-        logger.info("MODULE 6: GRAPH CONSTRUCTION - Not implemented yet")
-        logger.info("=" * 60)
-        return True
+        try:
+            logger.info("=" * 60)
+            logger.info("STARTING MODULE 6: WEIGHTED CAUSAL GRAPH CONSTRUCTION")
+            logger.info("=" * 60)
+            
+            # Execute causal graph construction
+            graph = run_causal_graph_construction()
+            
+            # Store metadata
+            self.pipeline_state['data_artifacts']['causal_graph'] = {
+                'pickle_path': 'artifacts/graphs/causal_graph.pkl',
+                'csv_path': 'artifacts/graphs/edge_weights.csv',
+                'visualization_path': 'artifacts/graphs/graph_visualization.png',
+                'nodes': graph.number_of_nodes(),
+                'edges': graph.number_of_edges(),
+                'feature_nodes': len([n for n, d in graph.nodes(data=True) if d.get('node_type') == 'feature']),
+                'outcome_nodes': len([n for n, d in graph.nodes(data=True) if d.get('node_type') == 'outcome'])
+            }
+            
+            self.pipeline_state['modules_completed'].append('module_6_graph_construction')
+            
+            logger.info(f"✅ Module 6 completed successfully")
+            logger.info(f"   - Total nodes: {graph.number_of_nodes()}")
+            logger.info(f"   - Total edges: {graph.number_of_edges()}")
+            logger.info(f"   - Feature nodes: {self.pipeline_state['data_artifacts']['causal_graph']['feature_nodes']}")
+            logger.info(f"   - Outcome nodes: {self.pipeline_state['data_artifacts']['causal_graph']['outcome_nodes']}")
+            logger.info(f"   - Graph pickle: {self.pipeline_state['data_artifacts']['causal_graph']['pickle_path']}")
+            logger.info(f"   - Edge weights CSV: {self.pipeline_state['data_artifacts']['causal_graph']['csv_path']}")
+            logger.info(f"   - Visualization: {self.pipeline_state['data_artifacts']['causal_graph']['visualization_path']}")
+            
+            return True
+            
+        except Exception as e:
+            error_msg = f"Module 6 failed: {str(e)}"
+            logger.error(error_msg)
+            self.pipeline_state['errors'].append(error_msg)
+            return False
     
     def run_module_7_rule_extraction(self) -> bool:
         """
@@ -628,8 +662,8 @@ def main():
     """Main entry point for the pipeline."""
     pipeline = VelaPipeline()
     
-    # Execute Modules 1, 2, 3, 4, and 5 since they are implemented
-    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding', 'module_4_feature_selection', 'module_5_llm_reasoning'])
+    # Execute Modules 1, 2, 3, 4, 5, and 6 since they are implemented
+    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding', 'module_4_feature_selection', 'module_5_llm_reasoning', 'module_6_graph_construction'])
     
     # Print final status
     status = pipeline.get_pipeline_status()
@@ -653,7 +687,7 @@ def main():
     logger.info("  pipeline.replace_last_completed_module()   # Reset + re-run last module")
     logger.info("  pipeline.clean_all_outputs()              # Nuclear option: reset everything")
     logger.info("Example usage:")
-    logger.info("  # If Module 5 output was wrong and needs replacement:")
+    logger.info("  # If Module 6 output was wrong and needs replacement:")
     logger.info("  # success = pipeline.replace_last_completed_module()")
     
     return result

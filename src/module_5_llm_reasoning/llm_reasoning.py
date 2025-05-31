@@ -387,8 +387,8 @@ class LLMChainOfThoughtGenerator:
         """
         Determine where to resume processing based on output files.
         
-        When ENABLE_RESUME is True, this will resume at the last completed batch minus 1,
-        effectively replacing the last batch when output is determined to be wrong.
+        When ENABLE_RESUME is True, this will resume from the next unprocessed batch,
+        NOT from replacing the last batch (which was causing data corruption).
         
         Returns:
             Tuple of (descriptive_last_index, causal_last_index)
@@ -400,38 +400,10 @@ class LLMChainOfThoughtGenerator:
         descriptive_last = self.get_last_processed_index(params.DESCRIPTIVE_JSONL_PATH)
         causal_last = self.get_last_processed_index(params.CAUSAL_JSONL_PATH)
         
-        logger.info(f"Resume check (before adjustment): descriptive_last={descriptive_last}, causal_last={causal_last}")
+        logger.info(f"Resume check: descriptive_last={descriptive_last}, causal_last={causal_last}")
         
-        # REPLACE LAST BATCH LOGIC: When resuming, we want to redo the last completed batch
-        # This is useful when the last batch output is determined to be wrong
-        if descriptive_last >= 0:
-            # Find the batch that contains the last completed index
-            # We need to resume from the beginning of that batch to replace it entirely
-            batch_size = params.BATCH_SIZE
-            last_batch_start = (descriptive_last // batch_size) * batch_size
-            
-            # Move back one full batch to replace the last completed batch
-            if last_batch_start >= batch_size:
-                descriptive_last = last_batch_start - 1
-                logger.info(f"Adjusted descriptive resume point: will replace last batch by resuming from index {descriptive_last}")
-            else:
-                # First batch completed, restart from beginning
-                descriptive_last = -1
-                logger.info("First batch completed - restarting from beginning to replace it")
-        
-        if causal_last >= 0:
-            # Same logic for causal explanations
-            batch_size = params.BATCH_SIZE
-            last_batch_start = (causal_last // batch_size) * batch_size
-            
-            # Move back one full batch to replace the last completed batch
-            if last_batch_start >= batch_size:
-                causal_last = last_batch_start - 1
-                logger.info(f"Adjusted causal resume point: will replace last batch by resuming from index {causal_last}")
-            else:
-                # First batch completed, restart from beginning
-                causal_last = -1
-                logger.info("First batch completed - restarting from beginning to replace it")
+        # FIXED RESUME LOGIC: Resume from the NEXT unprocessed index, don't replace anything
+        # This prevents data corruption and preserves existing valid work
         
         logger.info(f"Final resume points: descriptive_last={descriptive_last}, causal_last={causal_last}")
         
@@ -474,8 +446,7 @@ class LLMChainOfThoughtGenerator:
         """
         Initialize output files based on resume point.
         
-        When resuming with adjusted points (to replace last batch), this will truncate
-        the output files to remove entries beyond the resume point.
+        FIXED: No longer truncates files - preserves existing valid data.
         
         Args:
             descriptive_last: Last completed descriptive index (-1 if starting fresh)
@@ -488,10 +459,8 @@ class LLMChainOfThoughtGenerator:
                 pass  # Clear file
             logger.info("Starting descriptive phase from beginning - cleared output file")
         else:
-            # Resuming - need to truncate file to remove entries beyond resume point
-            logger.info(f"Resuming descriptive phase - truncating file to remove entries after index {descriptive_last}")
-            self._truncate_jsonl_file(params.DESCRIPTIVE_JSONL_PATH, descriptive_last)
-            logger.info(f"Resuming descriptive phase from index {descriptive_last + 1}")
+            # Resuming - PRESERVE existing data, no truncation
+            logger.info(f"Resuming descriptive phase from index {descriptive_last + 1} - preserving existing data")
         
         # Handle causal output file  
         if causal_last == -1:
@@ -500,10 +469,8 @@ class LLMChainOfThoughtGenerator:
                 pass  # Clear file
             logger.info("Starting causal phase from beginning - cleared output file")
         else:
-            # Resuming - need to truncate file to remove entries beyond resume point
-            logger.info(f"Resuming causal phase - truncating file to remove entries after index {causal_last}")
-            self._truncate_jsonl_file(params.CAUSAL_JSONL_PATH, causal_last)
-            logger.info(f"Resuming causal phase from index {causal_last + 1}")
+            # Resuming - PRESERVE existing data, no truncation
+            logger.info(f"Resuming causal phase from index {causal_last + 1} - preserving existing data")
     
     def _truncate_jsonl_file(self, file_path: str, last_valid_index: int) -> None:
         """
