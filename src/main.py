@@ -44,6 +44,7 @@ from module_3_data_encoding import run_data_encoding
 from module_4_feature_selection import run_feature_selection
 from module_5_llm_reasoning import run_llm_reasoning
 from module_6_causal_graph import run_causal_graph_construction
+from module_7_rule_extraction import run_rule_extraction
 
 
 class VelaPipeline:
@@ -95,8 +96,8 @@ class VelaPipeline:
                 'artifacts/graphs/graph_visualization.png'
             ],
             'module_7_rule_extraction': [
-                'artifacts/rule_sets/extracted_rules.json',
-                'artifacts/rule_sets/rule_performance.json'
+                'artifacts/rules/initial_rules.json',
+                'artifacts/rules/rule_statistics.json'
             ],
             'module_8_evaluation': [
                 'artifacts/eval/evaluation_report.json',
@@ -558,15 +559,41 @@ class VelaPipeline:
     
     def run_module_7_rule_extraction(self) -> bool:
         """
-        Execute Module 7: IF-THEN Rule Extraction (Placeholder)
+        Execute Module 7: IF-THEN Rule Extraction
         
         Returns:
             bool: True if successful, False otherwise
         """
-        logger.info("=" * 60)
-        logger.info("MODULE 7: RULE EXTRACTION - Not implemented yet")
-        logger.info("=" * 60)
-        return True
+        try:
+            logger.info("=" * 60)
+            logger.info("STARTING MODULE 7: IF-THEN RULE EXTRACTION")
+            logger.info("=" * 60)
+            
+            # Execute rule extraction
+            rules = run_rule_extraction()
+            
+            # Store metadata
+            self.pipeline_state['data_artifacts']['initial_rules'] = {
+                'json_path': 'artifacts/rules/initial_rules.json',
+                'statistics_path': 'artifacts/rules/rule_statistics.json',
+                'rule_count': len(rules),
+                'description': 'IF-THEN rule templates with placeholders for thresholds and confidence'
+            }
+            
+            self.pipeline_state['modules_completed'].append('module_7_rule_extraction')
+            
+            logger.info(f"✅ Module 7 completed successfully")
+            logger.info(f"   - Rules generated: {len(rules)}")
+            logger.info(f"   - Rules JSON: {self.pipeline_state['data_artifacts']['initial_rules']['json_path']}")
+            logger.info(f"   - Statistics: {self.pipeline_state['data_artifacts']['initial_rules']['statistics_path']}")
+            
+            return True
+            
+        except Exception as e:
+            error_msg = f"Module 7 failed: {str(e)}"
+            logger.error(error_msg)
+            self.pipeline_state['errors'].append(error_msg)
+            return False
     
     def run_module_8_evaluation(self) -> bool:
         """
@@ -662,8 +689,8 @@ def main():
     """Main entry point for the pipeline."""
     pipeline = VelaPipeline()
     
-    # Execute Modules 1, 2, 3, 4, 5, and 6 since they are implemented
-    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding', 'module_4_feature_selection', 'module_5_llm_reasoning', 'module_6_graph_construction'])
+    # Execute Modules 1, 2, 3, 4, 5, 6, and 7 since they are implemented
+    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding', 'module_4_feature_selection', 'module_5_llm_reasoning', 'module_6_graph_construction', 'module_7_rule_extraction'])
     
     # Print final status
     status = pipeline.get_pipeline_status()
