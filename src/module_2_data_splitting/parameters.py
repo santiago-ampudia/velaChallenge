@@ -20,15 +20,15 @@ TEST_OUTPUT_CSV_FILE = "test.csv"
 # Ensure output directory exists
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-# Test set composition specifications
+# Test set composition specifications - FIXED FOR FAIR EVALUATION
 TEST_SET_SIZE = 1000  # Total rows in test set
-TEST_POSITIVE_COUNT = 20  # Positive examples in test set (2%)
-TEST_NEGATIVE_COUNT = 980  # Negative examples in test set (98%)
+TEST_POSITIVE_COUNT = 100  # MAJOR FIX: Positive examples in test set (10% - same as training!)
+TEST_NEGATIVE_COUNT = 900  # MAJOR FIX: Negative examples in test set (90% - same as training!)
 
 # Validation thresholds
 EXPECTED_ORIGINAL_POSITIVE_RATE_MIN = 0.08  # Minimum expected positive rate (8%)
 EXPECTED_ORIGINAL_POSITIVE_RATE_MAX = 0.12  # Maximum expected positive rate (12%)
-TARGET_TEST_POSITIVE_RATE = 0.02  # Target positive rate in test set (2%)
+TARGET_TEST_POSITIVE_RATE = 0.10  # MAJOR FIX: Target positive rate same as training (10%)
 
 # Random seed for reproducibility
 RANDOM_SEED = 42

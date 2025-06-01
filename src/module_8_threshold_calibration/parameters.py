@@ -171,9 +171,10 @@ SAVE_INTERMEDIATE_RESULTS = True
 
 # Whether to validate test set composition
 VALIDATE_TEST_SET = True
-EXPECTED_TEST_SIZE = 1000
-EXPECTED_POSITIVE_COUNT = 20
-EXPECTED_NEGATIVE_COUNT = 980
+# Updated for training set (7800 rows, 780 positives used for threshold calibration)
+EXPECTED_TEST_SIZE = 7800
+EXPECTED_POSITIVE_COUNT = 780
+EXPECTED_NEGATIVE_COUNT = 7020
 
 # Whether to validate feature availability
 VALIDATE_FEATURES = True

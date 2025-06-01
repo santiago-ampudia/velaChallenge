@@ -178,41 +178,6 @@
     "confidence_placeholder": "<confidence>"
   },
   {
-    "feature": "industry_achievements",
-    "feature_type": "ordinal",
-    "outcome": "success",
-    "weight": 24,
-    "mechanisms": [
-      "Enhanced reputation",
-      "Enhanced visibility and credibility",
-      "Building reputation and attracting resources",
-      "Enhanced reputation and credibility",
-      "Comprehensive understanding of business dynamics"
-    ],
-    "mechanism_count": 5,
-    "rule_id": "industry_achievements_success_24",
-    "condition_template": "IF industry_achievements >= <ordinal_level> THEN P(success) >= <confidence>",
-    "threshold_placeholder": "<ordinal_level>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "previous_startup_funding_experience_as_ceo",
-    "feature_type": "binary",
-    "outcome": "success",
-    "weight": 22,
-    "mechanisms": [
-      "Comprehensive understanding of business dynamics",
-      "Provided technical knowledge and practical skills",
-      "Provided knowledge base and credibility",
-      "Provided practical skills and credibility",
-      "Provided practical skills and a broad perspective on business operations"
-    ],
-    "mechanism_count": 5,
-    "rule_id": "previous_startup_funding_experience_as_ceo_success_22",
-    "condition_template": "IF previous_startup_funding_experience_as_ceo == True THEN P(success) >= <confidence>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
     "feature": "board_advisor_roles",
     "feature_type": "continuous",
     "outcome": "success",
@@ -228,23 +193,6 @@
     "rule_id": "board_advisor_roles_success_20",
     "condition_template": "IF board_advisor_roles >= <threshold> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<threshold>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "big_company_experience",
-    "feature_type": "binary",
-    "outcome": "success",
-    "weight": 19,
-    "mechanisms": [
-      "Strong technical and operational foundation",
-      "Potential operational gap",
-      "Strong technical and operational foundation",
-      "Potential operational gap",
-      "Strong technical and operational foundation"
-    ],
-    "mechanism_count": 5,
-    "rule_id": "big_company_experience_success_19",
-    "condition_template": "IF big_company_experience == True THEN P(success) >= <confidence>",
     "confidence_placeholder": "<confidence>"
   },
   {

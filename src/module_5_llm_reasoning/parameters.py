@@ -40,7 +40,7 @@ LLM_MAX_TOKENS = 4000  # Maximum tokens per response
 
 # Batch processing controls for testing and cost management
 BATCH_SIZE = 20  # Founders per batch - adjust based on token limits and cost considerations
-BATCH_LIMIT = 10  # Maximum batches to process - set to None for full dataset processing
+BATCH_LIMIT = 30  # Maximum batches to process - set to None for full dataset processing
 
 # Resume/checkpoint functionality
 ENABLE_RESUME = True  # Set to True to resume from last completed batch - 1 (REPLACE LAST BATCH MODE), False to start fresh

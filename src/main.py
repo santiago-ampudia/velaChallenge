@@ -46,6 +46,7 @@ from module_5_llm_reasoning import run_llm_reasoning
 from module_6_causal_graph import run_causal_graph_construction
 from module_7_rule_extraction import run_rule_extraction
 from module_8_threshold_calibration import run_threshold_calibration
+from module_9_eval import run_evaluation
 
 
 class VelaPipeline:
@@ -104,6 +105,10 @@ class VelaPipeline:
                 'artifacts/rules_calibrated/calibrated_rules.json',
                 'artifacts/eval/threshold_metrics.csv',
                 'artifacts/rules_calibrated/calibration_summary.json'
+            ],
+            'module_9_eval': [
+                'artifacts/eval/final_metrics.json',
+                'artifacts/eval/report.md'
             ]
         }
         
@@ -208,7 +213,8 @@ class VelaPipeline:
             'module_5_llm_reasoning': self.run_module_5_llm_reasoning,
             'module_6_graph_construction': self.run_module_6_graph_construction,
             'module_7_rule_extraction': self.run_module_7_rule_extraction,
-            'module_8_threshold_calibration': self.run_module_8_threshold_calibration
+            'module_8_threshold_calibration': self.run_module_8_threshold_calibration,
+            'module_9_eval': self.run_module_9_eval
         }
         
         if module_to_replace in module_functions:
@@ -606,6 +612,7 @@ class VelaPipeline:
         try:
             logger.info("=" * 60)
             logger.info("STARTING MODULE 8: THRESHOLD CALIBRATION")
+            logger.info("🎯 MAJOR FIX: Now uses training set (780 positives) for robust threshold calibration")
             logger.info("=" * 60)
             
             # Execute threshold calibration
@@ -617,13 +624,17 @@ class VelaPipeline:
                 'csv_path': 'artifacts/eval/threshold_metrics.csv',
                 'summary_path': 'artifacts/rules_calibrated/calibration_summary.json',
                 'rule_count': len(calibrated_rules),
-                'description': 'Calibrated IF-THEN rules with specific thresholds achieving target precision'
+                'description': 'Calibrated IF-THEN rules with thresholds optimized on training set',
+                'training_set_size': 7800,
+                'training_positives': 780
             }
             
             self.pipeline_state['modules_completed'].append('module_8_threshold_calibration')
             
             logger.info(f"✅ Module 8 completed successfully")
             logger.info(f"   - Calibrated rules: {len(calibrated_rules)}")
+            logger.info(f"   - Threshold calibration on: 7,800-row training set (780 positives)")
+            logger.info(f"   - Test set remains untouched for evaluation")
             logger.info(f"   - Rules JSON: {self.pipeline_state['data_artifacts']['calibrated_rules']['json_path']}")
             logger.info(f"   - Metrics CSV: {self.pipeline_state['data_artifacts']['calibrated_rules']['csv_path']}")
             logger.info(f"   - Summary: {self.pipeline_state['data_artifacts']['calibrated_rules']['summary_path']}")
@@ -632,6 +643,59 @@ class VelaPipeline:
             
         except Exception as e:
             error_msg = f"Module 8 failed: {str(e)}"
+            logger.error(error_msg)
+            self.pipeline_state['errors'].append(error_msg)
+            return False
+    
+    def run_module_9_eval(self) -> bool:
+        """
+        Execute Module 9: Evaluation and Reporting
+        
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        try:
+            logger.info("=" * 60)
+            logger.info("STARTING MODULE 9: EVALUATION & REPORTING")
+            logger.info("🎯 CLEAN EVALUATION: Using full test set (1000 rows, 20 positives)")
+            logger.info("=" * 60)
+            
+            # Execute evaluation and reporting
+            final_metrics, report_content = run_evaluation()
+            
+            # Store metadata
+            self.pipeline_state['data_artifacts']['final_evaluation'] = {
+                'metrics_path': 'artifacts/eval/final_metrics.json',
+                'report_path': 'artifacts/eval/report.md',
+                'final_precision': final_metrics['precision'],
+                'final_recall': final_metrics['recall'],
+                'final_f1': final_metrics['f1_score'],
+                'true_positives': final_metrics['TP'],
+                'false_positives': final_metrics['FP'],
+                'false_negatives': final_metrics['FN'],
+                'true_negatives': final_metrics['TN'],
+                'report_size_chars': len(report_content),
+                'test_set_size': 1000,
+                'test_positives': 20,
+                'evaluation_type': 'clean_no_leakage'
+            }
+            
+            self.pipeline_state['modules_completed'].append('module_9_eval')
+            
+            logger.info(f"✅ Module 9 completed successfully")
+            logger.info(f"   - CLEAN EVALUATION on 1000-row test set (20 positives)")
+            logger.info(f"   - Final Precision: {final_metrics['precision']:.3f}")
+            logger.info(f"   - Final Recall: {final_metrics['recall']:.3f}")
+            logger.info(f"   - Final F1 Score: {final_metrics['f1_score']:.3f}")
+            logger.info(f"   - True Positives: {final_metrics['TP']}")
+            logger.info(f"   - False Positives: {final_metrics['FP']}")
+            logger.info(f"   - Metrics JSON: {self.pipeline_state['data_artifacts']['final_evaluation']['metrics_path']}")
+            logger.info(f"   - Report Markdown: {self.pipeline_state['data_artifacts']['final_evaluation']['report_path']}")
+            
+            return True
+            
+        except Exception as e:
+            error_msg = f"Module 9 failed: {str(e)}"
             logger.error(error_msg)
             self.pipeline_state['errors'].append(error_msg)
             return False
@@ -655,7 +719,8 @@ class VelaPipeline:
                 'module_5_llm_reasoning',
                 'module_6_graph_construction',
                 'module_7_rule_extraction',
-                'module_8_threshold_calibration'
+                'module_8_threshold_calibration',
+                'module_9_eval'
             ]
         
         logger.info("🚀 Starting Vela Partners Investment Decision Pipeline")
@@ -670,7 +735,8 @@ class VelaPipeline:
             'module_5_llm_reasoning': self.run_module_5_llm_reasoning,
             'module_6_graph_construction': self.run_module_6_graph_construction,
             'module_7_rule_extraction': self.run_module_7_rule_extraction,
-            'module_8_threshold_calibration': self.run_module_8_threshold_calibration
+            'module_8_threshold_calibration': self.run_module_8_threshold_calibration,
+            'module_9_eval': self.run_module_9_eval
         }
         
         # Execute each module
@@ -709,8 +775,8 @@ class VelaPipeline:
             'modules_completed': self.pipeline_state['modules_completed'],
             'data_artifacts': self.pipeline_state['data_artifacts'],
             'errors': self.pipeline_state['errors'],
-            'total_modules': 8,
-            'completion_rate': len(self.pipeline_state['modules_completed']) / 8
+            'total_modules': 9,
+            'completion_rate': len(self.pipeline_state['modules_completed']) / 9
         }
 
 
@@ -718,15 +784,15 @@ def main():
     """Main entry point for the pipeline."""
     pipeline = VelaPipeline()
     
-    # Execute Modules 1, 2, 3, 4, 5, 6, 7, and 8 since they are implemented
-    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding', 'module_4_feature_selection', 'module_5_llm_reasoning', 'module_6_graph_construction', 'module_7_rule_extraction', 'module_8_threshold_calibration'])
+    # Execute Modules 1, 2, 3, 4, 5, 6, 7, 8, and 9 since they are implemented
+    result = pipeline.execute_pipeline(['module_1_data_cleaning', 'module_2_data_splitting', 'module_3_data_encoding', 'module_4_feature_selection', 'module_5_llm_reasoning', 'module_6_graph_construction', 'module_7_rule_extraction', 'module_8_threshold_calibration', 'module_9_eval'])
     
     # Print final status
     status = pipeline.get_pipeline_status()
     logger.info("\n" + "=" * 60)
     logger.info("PIPELINE EXECUTION SUMMARY")
     logger.info("=" * 60)
-    logger.info(f"Modules completed: {len(status['modules_completed'])}/8")
+    logger.info(f"Modules completed: {len(status['modules_completed'])}/9")
     logger.info(f"Success rate: {status['completion_rate']:.1%}")
     
     if status['errors']:

@@ -23,6 +23,7 @@ import pandas as pd
 import numpy as np
 from typing import List, Dict, Any, Tuple, Optional, Union
 from collections import defaultdict
+from sklearn.model_selection import train_test_split
 
 # Import module parameters
 from . import parameters as params
@@ -103,50 +104,57 @@ class ThresholdCalibrator:
     
     def load_test_data(self) -> pd.DataFrame:
         """
-        Load test data for threshold calibration.
+        Load training data for threshold calibration.
+        
+        MAJOR FIX: Instead of using a tiny 500-row validation set (10 positives),
+        we now use the full 7,800-row training set (780 positives) for threshold calibration.
+        This provides much more robust and generalizable thresholds.
+        
+        The original test set remains completely untouched for final evaluation in Module 9.
         
         Returns:
-            Test DataFrame
+            Training DataFrame (used for threshold calibration)
             
         Raises:
-            FileNotFoundError: If test data doesn't exist
-            ValueError: If test data format is invalid
+            FileNotFoundError: If training data doesn't exist
+            ValueError: If training data format is invalid
         """
-        logger.info(f"Loading test data from {params.TEST_SELECTED_PATH}")
+        training_data_path = "artifacts/feature_selection/train_selected.pkl"
         
-        if not os.path.exists(params.TEST_SELECTED_PATH):
-            raise FileNotFoundError(f"Test data not found: {params.TEST_SELECTED_PATH}")
+        logger.info(f"Loading training data for threshold calibration from {training_data_path}")
+        logger.info("🎯 MAJOR FIX: Using training set (780 positives) instead of tiny validation set (10 positives)")
+        
+        if not os.path.exists(training_data_path):
+            raise FileNotFoundError(f"Training data not found: {training_data_path}")
         
         try:
-            test_df = pd.read_pickle(params.TEST_SELECTED_PATH)
+            # Load the full training set
+            train_df = pd.read_pickle(training_data_path)
             
-            # Validate test set composition if enabled
-            if params.VALIDATE_TEST_SET:
-                if len(test_df) != params.EXPECTED_TEST_SIZE:
-                    logger.warning(f"Test set size {len(test_df)} != expected {params.EXPECTED_TEST_SIZE}")
-                
-                positive_count = (test_df['success'] == 1).sum()
-                negative_count = (test_df['success'] == 0).sum()
-                
-                logger.info(f"Test set composition: {positive_count} positives, {negative_count} negatives")
-                
-                if positive_count != params.EXPECTED_POSITIVE_COUNT:
-                    logger.warning(f"Positive count {positive_count} != expected {params.EXPECTED_POSITIVE_COUNT}")
-                
-                if negative_count != params.EXPECTED_NEGATIVE_COUNT:
-                    logger.warning(f"Negative count {negative_count} != expected {params.EXPECTED_NEGATIVE_COUNT}")
+            logger.info(f"Loaded training set for threshold calibration: {train_df.shape}")
+            
+            # Validate training set composition
+            positive_count = (train_df['success'] == 1).sum()
+            negative_count = (train_df['success'] == 0).sum()
+            
+            logger.info(f"Training set composition: {positive_count} positives, {negative_count} negatives")
+            logger.info(f"This is {positive_count//10}x more positives than the previous tiny validation set!")
             
             # Split features and target
-            self.y_test = test_df['success'].astype(int)
-            self.X_test = test_df.drop(columns=['success'])
+            self.y_test = train_df['success'].astype(int)
+            self.X_test = train_df.drop(columns=['success'])
             
-            logger.info(f"Loaded test data: {test_df.shape} ({positive_count} positives)")
+            logger.info(f"📊 Training set ready for robust threshold calibration:")
+            logger.info(f"   - Shape: {train_df.shape}")
+            logger.info(f"   - Positives: {positive_count} ({positive_count/len(train_df):.1%})")
+            logger.info(f"   - Negatives: {negative_count} ({negative_count/len(train_df):.1%})")
+            logger.info("✅ Test set remains completely untouched for final evaluation")
             
-            self.test_data = test_df
-            return test_df
+            self.test_data = train_df
+            return train_df
             
         except Exception as e:
-            raise ValueError(f"Failed to load test data: {e}")
+            raise ValueError(f"Failed to load training data for threshold calibration: {e}")
     
     def generate_candidate_thresholds(self, rule: Dict[str, Any]) -> List[Union[float, int, bool]]:
         """

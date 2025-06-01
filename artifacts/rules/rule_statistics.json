@@ -2,16 +2,16 @@
   "extraction_summary": {
     "total_edges_in_graph": 39,
     "valid_edges_processed": 0,
-    "rules_generated": 25,
+    "rules_generated": 22,
     "top_edges_requested": 25
   },
   "rules_by_feature_type": {
-    "ordinal": 8,
+    "ordinal": 7,
     "continuous": 9,
-    "binary": 8
+    "binary": 6
   },
   "rules_by_outcome": {
-    "success": 23,
+    "success": 20,
     "failure": 2
   },
   "feature_types_detected": {
@@ -25,10 +25,7 @@
     "nasdaq_company_experience": "binary",
     "significant_press_media_coverage": "ordinal",
     "number_of_companies": "continuous",
-    "industry_achievements": "ordinal",
-    "previous_startup_funding_experience_as_ceo": "binary",
     "board_advisor_roles": "continuous",
-    "big_company_experience": "binary",
     "VC_experience": "binary",
     "persona": "ordinal",
     "languages": "ordinal",
@@ -39,7 +36,11 @@
     "investor_quality_prior_startup": "binary",
     "emotional_intelligence_qual": "ordinal"
   },
-  "skipped_features": [],
+  "skipped_features": [
+    "previous_startup_funding_experience_as_ceo",
+    "industry_achievements",
+    "big_company_experience"
+  ],
   "configuration": {
     "num_top_edges": 25,
     "min_edge_weight": 1,
