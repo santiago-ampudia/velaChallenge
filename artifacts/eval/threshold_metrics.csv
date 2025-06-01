@@ -1,11 +1,16 @@
 feature,feature_type,outcome,weight,threshold,rule_precision,rule_support,combined_precision,combined_support
-education_institution,ordinal,success,122,4,0.200,194,0.218,226
-number_of_leadership_roles,continuous,success,85,2,0.109,498,0.218,226
-yoe,continuous,success,72,19.542465,0.102,218,0.218,226
-emotional_intelligence,continuous,success,66,0,0.090,700,0.218,226
-ceo_experience,binary,success,62,True,0.089,294,0.218,226
-technical_leadership_roles,continuous,success,54,True,0.135,390,0.218,226
-perseverance,ordinal,success,45,2,0.105,593,0.218,226
-nasdaq_company_experience,binary,success,42,True,0.178,303,0.218,226
-significant_press_media_coverage,ordinal,success,34,True,0.179,173,0.218,226
-number_of_companies,continuous,success,26,20.0,0.667,2,0.218,226
+education_institution,ordinal,success,326,4,0.200,194,0.229,290
+number_of_leadership_roles,continuous,success,246,2,0.109,498,0.229,290
+yoe,continuous,success,243,19.542465,0.102,218,0.229,290
+emotional_intelligence,continuous,success,203,0,0.090,700,0.229,290
+technical_leadership_roles,continuous,success,164,True,0.135,390,0.229,290
+ceo_experience,binary,success,145,True,0.089,294,0.229,290
+perseverance,ordinal,success,104,2,0.105,593,0.229,290
+nasdaq_company_experience,binary,success,91,True,0.178,303,0.229,290
+significant_press_media_coverage,ordinal,success,83,True,0.179,173,0.229,290
+board_advisor_roles,continuous,success,67,True,0.192,290,0.229,290
+number_of_companies,continuous,success,61,20.0,0.667,2,0.229,290
+VC_experience,binary,success,38,True,0.260,124,0.229,290
+extroversion,binary,success,35,True,0.100,207,0.229,290
+persona,ordinal,success,24,"['L2_1', 'L2_2', 'L3_3', 'L3_6']",1.000,2,0.229,290
+career_growth,continuous,success,24,True,0.102,650,0.229,290

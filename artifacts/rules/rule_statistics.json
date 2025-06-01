@@ -1,39 +1,40 @@
 {
   "extraction_summary": {
-    "total_edges_in_graph": 39,
+    "total_edges_in_graph": 42,
     "valid_edges_processed": 0,
     "rules_generated": 22,
     "top_edges_requested": 25
   },
   "rules_by_feature_type": {
     "ordinal": 7,
-    "continuous": 9,
-    "binary": 6
+    "continuous": 8,
+    "binary": 7
   },
   "rules_by_outcome": {
-    "success": 20,
-    "failure": 2
+    "success": 21,
+    "failure": 1
   },
   "feature_types_detected": {
     "education_institution": "ordinal",
     "number_of_leadership_roles": "continuous",
     "yoe": "continuous",
     "emotional_intelligence": "continuous",
-    "ceo_experience": "binary",
     "technical_leadership_roles": "continuous",
+    "ceo_experience": "binary",
     "perseverance": "ordinal",
     "nasdaq_company_experience": "binary",
     "significant_press_media_coverage": "ordinal",
-    "number_of_companies": "continuous",
     "board_advisor_roles": "continuous",
+    "number_of_companies": "continuous",
     "VC_experience": "binary",
+    "extroversion": "binary",
     "persona": "ordinal",
-    "languages": "ordinal",
-    "number_of_roles": "continuous",
     "career_growth": "continuous",
-    "education_field_of_study_qual": "ordinal",
-    "nasdaq_leadership": "binary",
+    "number_of_roles": "continuous",
     "investor_quality_prior_startup": "binary",
+    "languages": "ordinal",
+    "nasdaq_leadership": "binary",
+    "education_field_of_study_qual": "ordinal",
     "emotional_intelligence_qual": "ordinal"
   },
   "skipped_features": [

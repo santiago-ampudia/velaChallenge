@@ -1,11 +1,11 @@
 {
-  "TP": 38,
-  "FP": 103,
-  "FN": 62,
-  "TN": 797,
-  "precision": 0.2695035460992908,
-  "recall": 0.38,
-  "f1_score": 0.3153526970954357,
-  "scoring_threshold": 0.7062204228806344,
-  "total_predictions": 141
+  "TP": 42,
+  "FP": 121,
+  "FN": 58,
+  "TN": 779,
+  "precision": 0.25766871165644173,
+  "recall": 0.42,
+  "f1_score": 0.3193916349809886,
+  "scoring_threshold": 0.9087359661235941,
+  "total_predictions": 163
 }

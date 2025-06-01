@@ -3,7 +3,7 @@
     "feature": "education_institution",
     "feature_type": "ordinal",
     "outcome": "success",
-    "weight": 122,
+    "weight": 326,
     "mechanisms": [
       "Solid foundation and broad business exposure",
       "Robust business acumen",
@@ -12,7 +12,7 @@
       "Diverse skills and insights"
     ],
     "mechanism_count": 5,
-    "rule_id": "education_institution_success_122",
+    "rule_id": "education_institution_success_326",
     "condition_template": "IF education_institution >= <ordinal_level> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<ordinal_level>",
     "confidence_placeholder": "<confidence>"
@@ -21,7 +21,7 @@
     "feature": "number_of_leadership_roles",
     "feature_type": "continuous",
     "outcome": "success",
-    "weight": 85,
+    "weight": 246,
     "mechanisms": [
       "Success",
       "Success",
@@ -30,7 +30,7 @@
       "Success"
     ],
     "mechanism_count": 5,
-    "rule_id": "number_of_leadership_roles_success_85",
+    "rule_id": "number_of_leadership_roles_success_246",
     "condition_template": "IF number_of_leadership_roles >= <threshold> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<threshold>",
     "confidence_placeholder": "<confidence>"
@@ -39,7 +39,7 @@
     "feature": "yoe",
     "feature_type": "continuous",
     "outcome": "success",
-    "weight": 72,
+    "weight": 243,
     "mechanisms": [
       "Solid foundation and broad business exposure",
       "Robust business acumen",
@@ -48,7 +48,7 @@
       "Solid foundation"
     ],
     "mechanism_count": 5,
-    "rule_id": "yoe_success_72",
+    "rule_id": "yoe_success_243",
     "condition_template": "IF yoe >= <threshold> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<threshold>",
     "confidence_placeholder": "<confidence>"
@@ -57,7 +57,7 @@
     "feature": "emotional_intelligence",
     "feature_type": "continuous",
     "outcome": "success",
-    "weight": 66,
+    "weight": 203,
     "mechanisms": [
       "Resilience and leadership traits",
       "Key roles in overcoming challenges",
@@ -66,33 +66,16 @@
       "Overcoming challenges and maintaining motivation"
     ],
     "mechanism_count": 5,
-    "rule_id": "emotional_intelligence_success_66",
+    "rule_id": "emotional_intelligence_success_203",
     "condition_template": "IF emotional_intelligence >= <threshold> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<threshold>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "ceo_experience",
-    "feature_type": "binary",
-    "outcome": "success",
-    "weight": 62,
-    "mechanisms": [
-      "Strong capability in leading ventures",
-      "Strong foundation",
-      "Enhanced visibility and credibility",
-      "Enhanced leadership and stakeholder management",
-      "Comprehensive understanding of business dynamics"
-    ],
-    "mechanism_count": 5,
-    "rule_id": "ceo_experience_success_62",
-    "condition_template": "IF ceo_experience == True THEN P(success) >= <confidence>",
     "confidence_placeholder": "<confidence>"
   },
   {
     "feature": "technical_leadership_roles",
     "feature_type": "continuous",
     "outcome": "success",
-    "weight": 54,
+    "weight": 164,
     "mechanisms": [
       "Comprehensive understanding of business dynamics",
       "Strong capability in leading ventures",
@@ -101,16 +84,33 @@
       "Ability to handle technical aspects of the business"
     ],
     "mechanism_count": 5,
-    "rule_id": "technical_leadership_roles_success_54",
+    "rule_id": "technical_leadership_roles_success_164",
     "condition_template": "IF technical_leadership_roles >= <threshold> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<threshold>",
+    "confidence_placeholder": "<confidence>"
+  },
+  {
+    "feature": "ceo_experience",
+    "feature_type": "binary",
+    "outcome": "success",
+    "weight": 145,
+    "mechanisms": [
+      "Strong capability in leading ventures",
+      "Strong foundation",
+      "Enhanced visibility and credibility",
+      "Enhanced leadership and stakeholder management",
+      "Comprehensive understanding of business dynamics"
+    ],
+    "mechanism_count": 5,
+    "rule_id": "ceo_experience_success_145",
+    "condition_template": "IF ceo_experience == True THEN P(success) >= <confidence>",
     "confidence_placeholder": "<confidence>"
   },
   {
     "feature": "perseverance",
     "feature_type": "ordinal",
     "outcome": "success",
-    "weight": 45,
+    "weight": 104,
     "mechanisms": [
       "Resilience and leadership traits",
       "Key roles in overcoming challenges",
@@ -119,7 +119,7 @@
       "Success"
     ],
     "mechanism_count": 5,
-    "rule_id": "perseverance_success_45",
+    "rule_id": "perseverance_success_104",
     "condition_template": "IF perseverance >= <ordinal_level> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<ordinal_level>",
     "confidence_placeholder": "<confidence>"
@@ -128,7 +128,7 @@
     "feature": "nasdaq_company_experience",
     "feature_type": "binary",
     "outcome": "success",
-    "weight": 42,
+    "weight": 91,
     "mechanisms": [
       "Success",
       "Success",
@@ -137,7 +137,7 @@
       "Compensated by effective leadership and perseverance"
     ],
     "mechanism_count": 5,
-    "rule_id": "nasdaq_company_experience_success_42",
+    "rule_id": "nasdaq_company_experience_success_91",
     "condition_template": "IF nasdaq_company_experience == True THEN P(success) >= <confidence>",
     "confidence_placeholder": "<confidence>"
   },
@@ -145,7 +145,7 @@
     "feature": "significant_press_media_coverage",
     "feature_type": "ordinal",
     "outcome": "success",
-    "weight": 34,
+    "weight": 83,
     "mechanisms": [
       "Strong network and public confidence",
       "Enhanced reputation",
@@ -154,34 +154,16 @@
       "Lower public visibility"
     ],
     "mechanism_count": 5,
-    "rule_id": "significant_press_media_coverage_success_34",
+    "rule_id": "significant_press_media_coverage_success_83",
     "condition_template": "IF significant_press_media_coverage >= <ordinal_level> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<ordinal_level>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "number_of_companies",
-    "feature_type": "continuous",
-    "outcome": "success",
-    "weight": 26,
-    "mechanisms": [
-      "Broad perspective and diverse skills",
-      "Diverse experience and technical expertise",
-      "Diverse experience",
-      "Enhanced credibility and diverse experience",
-      "Hindered development of business and leadership skills"
-    ],
-    "mechanism_count": 5,
-    "rule_id": "number_of_companies_success_26",
-    "condition_template": "IF number_of_companies >= <threshold> THEN P(success) >= <confidence>",
-    "threshold_placeholder": "<threshold>",
     "confidence_placeholder": "<confidence>"
   },
   {
     "feature": "board_advisor_roles",
     "feature_type": "continuous",
     "outcome": "success",
-    "weight": 20,
+    "weight": 67,
     "mechanisms": [
       "Leadership credibility and strategic governance experience",
       "Enhanced networking and public relations skills",
@@ -190,8 +172,26 @@
       "Leadership skills and governance knowledge"
     ],
     "mechanism_count": 5,
-    "rule_id": "board_advisor_roles_success_20",
+    "rule_id": "board_advisor_roles_success_67",
     "condition_template": "IF board_advisor_roles >= <threshold> THEN P(success) >= <confidence>",
+    "threshold_placeholder": "<threshold>",
+    "confidence_placeholder": "<confidence>"
+  },
+  {
+    "feature": "number_of_companies",
+    "feature_type": "continuous",
+    "outcome": "success",
+    "weight": 61,
+    "mechanisms": [
+      "Broad perspective and diverse skills",
+      "Diverse experience and technical expertise",
+      "Diverse experience",
+      "Enhanced credibility and diverse experience",
+      "Hindered development of business and leadership skills"
+    ],
+    "mechanism_count": 5,
+    "rule_id": "number_of_companies_success_61",
+    "condition_template": "IF number_of_companies >= <threshold> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<threshold>",
     "confidence_placeholder": "<confidence>"
   },
@@ -199,7 +199,7 @@
     "feature": "VC_experience",
     "feature_type": "binary",
     "outcome": "success",
-    "weight": 13,
+    "weight": 38,
     "mechanisms": [
       "Enhanced investment and financial insights",
       "Enhanced leadership and financial management",
@@ -208,15 +208,32 @@
       "Essential insights into investment landscape"
     ],
     "mechanism_count": 5,
-    "rule_id": "VC_experience_success_13",
+    "rule_id": "VC_experience_success_38",
     "condition_template": "IF VC_experience == True THEN P(success) >= <confidence>",
+    "confidence_placeholder": "<confidence>"
+  },
+  {
+    "feature": "extroversion",
+    "feature_type": "binary",
+    "outcome": "success",
+    "weight": 35,
+    "mechanisms": [
+      "Aided in effective stakeholder management and leadership",
+      "Aided in overcoming challenges and networking effectively",
+      "Challenges in leadership dynamism and resilience",
+      "Strong leadership presence and stakeholder engagement",
+      "Enhanced external communications"
+    ],
+    "mechanism_count": 5,
+    "rule_id": "extroversion_success_35",
+    "condition_template": "IF extroversion == True THEN P(success) >= <confidence>",
     "confidence_placeholder": "<confidence>"
   },
   {
     "feature": "persona",
     "feature_type": "ordinal",
     "outcome": "success",
-    "weight": 12,
+    "weight": 24,
     "mechanisms": [
       "Success",
       "Success",
@@ -225,52 +242,16 @@
       "Successful investor and team relations"
     ],
     "mechanism_count": 5,
-    "rule_id": "persona_success_12",
+    "rule_id": "persona_success_24",
     "condition_template": "IF persona >= <ordinal_level> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<ordinal_level>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "languages",
-    "feature_type": "ordinal",
-    "outcome": "success",
-    "weight": 7,
-    "mechanisms": [
-      "Enhanced market reach and operational capabilities",
-      "Enhanced operational capabilities and market understanding",
-      "Broader networking and communication advantages",
-      "Broader networking and business opportunities",
-      "Enhanced communication skills and global market perspective"
-    ],
-    "mechanism_count": 5,
-    "rule_id": "languages_success_7",
-    "condition_template": "IF languages >= <ordinal_level> THEN P(success) >= <confidence>",
-    "threshold_placeholder": "<ordinal_level>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "number_of_roles",
-    "feature_type": "continuous",
-    "outcome": "success",
-    "weight": 6,
-    "mechanisms": [
-      "Success",
-      "Diverse skills and insights",
-      "Robust understanding of business operations and strategic management",
-      "Provided a solid foundation for effective company management",
-      "Enhanced operational capabilities and market understanding"
-    ],
-    "mechanism_count": 5,
-    "rule_id": "number_of_roles_success_6",
-    "condition_template": "IF number_of_roles >= <threshold> THEN P(success) >= <confidence>",
-    "threshold_placeholder": "<threshold>",
     "confidence_placeholder": "<confidence>"
   },
   {
     "feature": "career_growth",
     "feature_type": "continuous",
     "outcome": "success",
-    "weight": 6,
+    "weight": 24,
     "mechanisms": [
       "Potential challenges in ambition and resilience",
       "Ability to overcome challenges",
@@ -279,16 +260,86 @@
       "Demonstrated adaptability and industry knowledge"
     ],
     "mechanism_count": 5,
-    "rule_id": "career_growth_success_6",
+    "rule_id": "career_growth_success_24",
     "condition_template": "IF career_growth >= <threshold> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<threshold>",
+    "confidence_placeholder": "<confidence>"
+  },
+  {
+    "feature": "number_of_roles",
+    "feature_type": "continuous",
+    "outcome": "success",
+    "weight": 20,
+    "mechanisms": [
+      "Success",
+      "Diverse skills and insights",
+      "Robust understanding of business operations and strategic management",
+      "Provided a solid foundation for effective company management",
+      "Enhanced operational capabilities and market understanding"
+    ],
+    "mechanism_count": 5,
+    "rule_id": "number_of_roles_success_20",
+    "condition_template": "IF number_of_roles >= <threshold> THEN P(success) >= <confidence>",
+    "threshold_placeholder": "<threshold>",
+    "confidence_placeholder": "<confidence>"
+  },
+  {
+    "feature": "investor_quality_prior_startup",
+    "feature_type": "binary",
+    "outcome": "success",
+    "weight": 19,
+    "mechanisms": [
+      "Enhanced credibility and resource acquisition",
+      "Improved financial acumen",
+      "Significant roles despite short experience",
+      "Ability to secure funding and manage investor relations",
+      "Enhanced capability to drive innovation and secure funding"
+    ],
+    "mechanism_count": 5,
+    "rule_id": "investor_quality_prior_startup_success_19",
+    "condition_template": "IF investor_quality_prior_startup == True THEN P(success) >= <confidence>",
+    "confidence_placeholder": "<confidence>"
+  },
+  {
+    "feature": "languages",
+    "feature_type": "ordinal",
+    "outcome": "success",
+    "weight": 10,
+    "mechanisms": [
+      "Enhanced market reach and operational capabilities",
+      "Enhanced operational capabilities and market understanding",
+      "Broader networking and communication advantages",
+      "Broader networking and business opportunities",
+      "Enhanced communication skills and global market perspective"
+    ],
+    "mechanism_count": 5,
+    "rule_id": "languages_success_10",
+    "condition_template": "IF languages >= <ordinal_level> THEN P(success) >= <confidence>",
+    "threshold_placeholder": "<ordinal_level>",
+    "confidence_placeholder": "<confidence>"
+  },
+  {
+    "feature": "nasdaq_leadership",
+    "feature_type": "binary",
+    "outcome": "success",
+    "weight": 7,
+    "mechanisms": [
+      "Enhanced credibility and leadership skills",
+      "Effective management of market dynamics and investor relations",
+      "Strong capability to lead in high-stakes environments",
+      "Robust capability to manage and direct strategic business initiatives",
+      "Deep understanding of technical and market dynamics"
+    ],
+    "mechanism_count": 5,
+    "rule_id": "nasdaq_leadership_success_7",
+    "condition_template": "IF nasdaq_leadership == True THEN P(success) >= <confidence>",
     "confidence_placeholder": "<confidence>"
   },
   {
     "feature": "education_field_of_study_qual",
     "feature_type": "ordinal",
     "outcome": "success",
-    "weight": 5,
+    "weight": 6,
     "mechanisms": [
       "Enhanced credibility and resource acquisition",
       "Provided necessary leadership skills and knowledge",
@@ -297,40 +348,9 @@
       "Reduced specialized knowledge"
     ],
     "mechanism_count": 5,
-    "rule_id": "education_field_of_study_qual_success_5",
+    "rule_id": "education_field_of_study_qual_success_6",
     "condition_template": "IF education_field_of_study_qual >= <ordinal_level> THEN P(success) >= <confidence>",
     "threshold_placeholder": "<ordinal_level>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "nasdaq_leadership",
-    "feature_type": "binary",
-    "outcome": "success",
-    "weight": 4,
-    "mechanisms": [
-      "Enhanced credibility and leadership skills",
-      "Effective management of market dynamics and investor relations",
-      "Strong capability to lead in high-stakes environments",
-      "Robust capability to manage and direct strategic business initiatives"
-    ],
-    "mechanism_count": 4,
-    "rule_id": "nasdaq_leadership_success_4",
-    "condition_template": "IF nasdaq_leadership == True THEN P(success) >= <confidence>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "investor_quality_prior_startup",
-    "feature_type": "binary",
-    "outcome": "success",
-    "weight": 3,
-    "mechanisms": [
-      "Enhanced credibility and resource acquisition",
-      "Improved financial acumen",
-      "Significant roles despite short experience"
-    ],
-    "mechanism_count": 3,
-    "rule_id": "investor_quality_prior_startup_success_3",
-    "condition_template": "IF investor_quality_prior_startup == True THEN P(success) >= <confidence>",
     "confidence_placeholder": "<confidence>"
   },
   {
@@ -351,7 +371,7 @@
     "feature": "ceo_experience",
     "feature_type": "binary",
     "outcome": "failure",
-    "weight": 11,
+    "weight": 21,
     "mechanisms": [
       "Limited visibility and strategic influence",
       "Limited understanding of public company complexities",
@@ -360,26 +380,8 @@
       "Restricted exposure and adaptability in startup environment"
     ],
     "mechanism_count": 5,
-    "rule_id": "ceo_experience_failure_11",
+    "rule_id": "ceo_experience_failure_21",
     "condition_template": "IF ceo_experience == False THEN P(failure) >= <confidence>",
-    "confidence_placeholder": "<confidence>"
-  },
-  {
-    "feature": "yoe",
-    "feature_type": "continuous",
-    "outcome": "failure",
-    "weight": 9,
-    "mechanisms": [
-      "Strong technical knowledge and credibility",
-      "Developed comprehensive business management skills",
-      "Limited exposure to high-stakes financial environments",
-      "Limited exposure to critical financial management practices",
-      "Limited exposure to essential financial strategies"
-    ],
-    "mechanism_count": 5,
-    "rule_id": "yoe_failure_9",
-    "condition_template": "IF yoe >= <threshold> THEN P(failure) >= <confidence>",
-    "threshold_placeholder": "<threshold>",
     "confidence_placeholder": "<confidence>"
   }
 ]
